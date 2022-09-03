@@ -49,12 +49,12 @@ class NoteUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['back_url'] = self.success_url
-        context['form_title'] = f'Επεξεργασια {self.object.title}'
+        context['form_title'] = f'Название {self.object.title}'
         return context
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, f'Η σημειωση ανανεώθηκε!')
+        messages.success(self.request, f'Успешно!')
         return super().form_valid(form)
 
 
@@ -70,7 +70,7 @@ def pinned_view(request, pk):
 def delete_note_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.delete()
-    messages.warning(request, 'Διαγραφηκε')
+    messages.warning(request, 'Вы удалили заметку')
     return redirect(reverse('notes:home'))
 
 

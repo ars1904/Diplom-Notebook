@@ -29,19 +29,19 @@
             <div class="col-12">
                 <div class='card'>
                     <div class='card-header'>
-                        <h4>Notes</h4>
+                        <h4>Заметки</h4>
 
                     </div>
                     <div class='card-body'>
                         <div class='row'>
                             <div class='col-6'>
                             <!-- Large modal -->
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">New Note</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">Новая заметка</button>
                                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Create</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Создание заметки</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
@@ -51,7 +51,7 @@
                                                 {% csrf_token %}
                                                 {{ create_form }}
                                                 <br />
-                                            <button type='submit' class='btn btn-primary'><i class='fa fa-save'></i> Save</button>
+                                            <button type='submit' class='btn btn-primary'><i class='fa fa-save'></i> Сохранить</button>
                                             </form>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                         </div></div>
                             <div class='col-6'>
                                 <form method='get'>
-                                    <input name='q' class='form-control' type='text' placeholder='Search' />
+                                    <input name='q' class='form-control' type='text' placeholder='Поиск' />
                                     <button type='submit' class='btn btn-info'><i class='fa fa-search'> </i> </button>
                                     <a href='{{ request.path }}' style='color:red' class='pull-right btn btn-warning'><i class='fa fa-remove'> </i></a>
                                 </form>
@@ -71,14 +71,14 @@
         </div>
 
         <div class='row notes'> 
-            <div class='col-12'><h5> Pinned </h5></div>
+            <div class='col-12'><h5>Закреплено</h5></div>
             {% for note in pinned_qs %}
                 {% include 'notes/note_card.html' %}
             {% endfor %}
         </div>
 
         <div class='row notes'> 
-            <div class='col-12'><h5> Rest notes </h5></div>
+            <div class='col-12'><h5> Остальные заметки </h5></div>
             {% for note in qs %}
                 {% include 'notes/note_card.html' %}
             {% endfor %}

@@ -4,11 +4,11 @@ from tinymce.models import HTMLField
 
 
 COLORS = (
-        ('a', 'yellow'),
-        ('b', 'white'),
-        ('c', 'green'),
-        ('d', 'red'),
-        ('e', 'blue')
+        ('a', 'жёлтый'),
+        ('b', 'белый'),
+        ('c', 'зелёный'),
+        ('d', 'красный'),
+        ('e', 'синий')
     )
 
 
