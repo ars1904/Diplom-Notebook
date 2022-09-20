@@ -12,7 +12,7 @@ from .forms import NoteForm, TagForm
 from .tables import TagsTable
 
 
-@method_decorator(staff_member_required, name='dispatch')
+#@method_decorator(staff_member_required, name='dispatch')
 class NoteHomepageView(ListView):
     template_name = 'notes/homepage.html'
     model = Note
@@ -30,7 +30,7 @@ class NoteHomepageView(ListView):
         return context
 
 
-@staff_member_required
+#@staff_member_required
 def validate_new_note_view(request):
     form = NoteForm(request.POST or None)
     if form.is_valid():
@@ -39,7 +39,7 @@ def validate_new_note_view(request):
     return redirect(reverse('notes:home'))
 
 
-@method_decorator(staff_member_required, name='dispatch')
+#@method_decorator(staff_member_required, name='dispatch')
 class NoteUpdateView(UpdateView):
     form_class = NoteForm
     success_url = reverse_lazy('notes:home')
@@ -58,7 +58,7 @@ class NoteUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-@staff_member_required
+#@staff_member_required
 def pinned_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.pinned = False if instance.pinned else True
@@ -66,7 +66,7 @@ def pinned_view(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
 
 
-@staff_member_required
+#@staff_member_required
 def delete_note_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.delete()

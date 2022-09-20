@@ -42,6 +42,7 @@ class Note(models.Model):
     date = models.DateField(blank=True, null=True)
     tag = models.ManyToManyField(Tags, blank=True)
     color = models.CharField(max_length=1, choices=COLORS, default='a')
+    image = models.ImageField(upload_to='images', blank=True)
 
     class Meta:
         ordering = ['-pinned', '-timestamp']

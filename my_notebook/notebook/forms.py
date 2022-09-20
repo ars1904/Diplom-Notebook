@@ -15,7 +15,8 @@ class NoteForm(BaseForm, forms.ModelForm):
 
     class Meta:
         model = Note
-        fields = ['pinned', 'color', 'title', 'tag', 'description']
+        fields = ['pinned', 'color', 'title', 'tag', 'description', 'image']
+        labels = {'pinned': 'закреплён', 'color': 'цвет', 'title': 'заголовок', 'tag': 'тэг', 'description': 'описание', 'image': 'изображение',}
 
 
 class TagForm(BaseForm, forms.ModelForm):
