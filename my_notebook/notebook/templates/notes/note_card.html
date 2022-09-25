@@ -10,6 +10,7 @@
         <div class="card-body">
             <h4 class="card-title">{{ note|safe }}</h4>
             <p class="card-text">{{ note.description|safe|truncatechars_html:50 }}</p>
+
         </div>
         <div class="card-footer text-muted">
             {% for tag in note.tag.all %} <a href='{{ request.path }}?tag={{ tag.id }}'><i class="fa fa-tag" aria-hidden="true"></i> {{ tag }}</a>  {% empty %} No tags{% endfor %}
@@ -17,6 +18,7 @@
             <p class='text-muted'>Создана {{ note.timestamp}} <p>
             <a href='{{ note.get_edit_url }}' style='color:blue' class='pull-left'><i class='fa fa-edit'> </i></a>
             <a onclick='return confirm("УУууу")' href='{% url "notes:delete_note" note.id %}' style='color:red' class='pull-right'><i class='fa fa-trash'> </i></a>
+
         </div>
     </div>
 </div>

@@ -33,6 +33,9 @@
                         <form method='post' class='form'>
                             {% csrf_token %}
                             {{ form }}
+                            {% if note.image %}
+                                 <img src="{{note.image.url}}" width="300">
+                            {% endif %}
                             <br />
                             <button class='btn btn-success pull-right' type='submit'><i class='fa fa-save'></i></button> 
                         </form>
