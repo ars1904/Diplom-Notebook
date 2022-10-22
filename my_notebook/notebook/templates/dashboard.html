@@ -28,14 +28,29 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <form {% if action_url %} action="{{ action_url }}"  {% endif %}>
                 <div class="input-group no-border">
-                    <input name="q" type="text" value="{{ request.GET.q }}" class="form-control" placeholder="Поиск другого"
+                    <input name="q" type="text" value="{{ request.GET.q }}" class="form-control" placeholder="Поиск"
                     
                     >
+
                     <div class="input-group-append">
                         <div class="input-group-text"><i class="nc-icon nc-zoom-split"></i></div>
                     </div>
                 </div>
             </form>
+                                     {% if user.is_authenticated %}
+                 <li class="nav-item">
+                    Привет, {{user.username}}
+                    <a class="nav-link" href="{% url 'users:logout' %}">Выход</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}">Вход</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+                </li>
+                {% endif %}
 
           </div>
         </div>

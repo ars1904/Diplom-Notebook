@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'notebook',
     'tinymce',
     'django_tables2',
+    'userapp',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,14 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Переназначение модели пользователя
+AUTH_USER_MODEL = 'userapp.NoteUser'
+
+# Переходы
+# Куда идти после логина
+LOGIN_REDIRECT_URL = '/'
+# Куда идти после выхода
+LOGOUT_REDIRECT_URL = '/'
+# Куда идти на логин
+LOGIN_URL = '/users/login/'

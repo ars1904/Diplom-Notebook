@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from tinymce.models import HTMLField
+from userapp.models import NoteUser
 
 
 COLORS = (
@@ -43,6 +44,7 @@ class Note(models.Model):
     tag = models.ManyToManyField(Tags, blank=True)
     color = models.CharField(max_length=1, choices=COLORS, default='a')
     image = models.ImageField(upload_to='images', null=True, blank=True)
+    user = models.ForeignKey(NoteUser, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ['-pinned', '-timestamp']
