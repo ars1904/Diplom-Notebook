@@ -35,7 +35,7 @@ def validate_new_note_view(request):
     form = NoteForm(request.POST or None)
     if form.is_valid():
         form.save()
-        messages.success(request, 'New message added')
+        messages.success(request, 'Новая заметка создана')
     return redirect(reverse('notes:home'))
 
 
