@@ -37,19 +37,14 @@
                     </div>
                 </div>
             </form>
-                                     {% if user.is_authenticated %}
-                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:tag_list' %}">Список тегов</a>
+              {% if user.is_authenticated %}
                     Привет, {{user.username}}
                     <a class="nav-link" href="{% url 'users:logout' %}">Выход</a>
-                </li>
                 {% else %}
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:login' %}">Вход</a>
-                </li>
 
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
-                </li>
                 {% endif %}
 
           </div>

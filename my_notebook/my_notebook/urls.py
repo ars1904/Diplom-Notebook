@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('notebook.urls')),
     path('users/', include('userapp.urls', namespace='users')),
+    path('tags', include('notebook.urls', namespace='blog'))
 ]
 
 if settings.DEBUG:

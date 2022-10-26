@@ -1,9 +1,10 @@
 from django.shortcuts import reverse, redirect, get_object_or_404, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, DetailView, CreateView
+from django.views.generic import ListView, UpdateView, DetailView, CreateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
+from django.views.generic.base import ContextMixin
 
 from django_tables2 import RequestConfig
 
@@ -39,7 +40,6 @@ def validate_new_note_view(request):
     return redirect(reverse('notes:home'))
 
 
-#@method_decorator(staff_member_required, name='dispatch')
 class NoteUpdateView(UpdateView):
     form_class = NoteForm
     success_url = reverse_lazy('notes:home')
@@ -58,7 +58,7 @@ class NoteUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-#@staff_member_required
+
 def pinned_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.pinned = False if instance.pinned else True
@@ -66,12 +66,99 @@ def pinned_view(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
 
 
-#@staff_member_required
 def delete_note_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.delete()
     messages.warning(request, 'Вы удалили заметку')
     return redirect(reverse('notes:home'))
+
+class NameContextMixin(ContextMixin):
+
+    def get_context_data(self, *args, **kwargs):
+        """
+        Отвечает за передачу параметров в контекст
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        context = super().get_context_data(*args, **kwargs)
+        context['name'] = 'Теги'
+        return context
+
+class TagListView(ListView, NameContextMixin):
+    model = Tags
+    template_name = 'notes/tag_list.html'
+    context_object_name = 'tags'
+
+    def get_queryset(self):
+        """
+        Получение данных
+        :return:
+        """
+        return Tags.objects.all()
+
+
+# детальная информация
+class TagDetailView(DetailView, NameContextMixin):
+    model = Tags
+    template_name = 'notes/tag_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        """
+        Метод обработки get запроса
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        self.tag_id = kwargs['pk']
+        return super().get(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        """
+        Получение этого объекта
+        :param queryset:
+        :return:
+        """
+        return get_object_or_404(Tags, pk=self.tag_id)
+
+class TagCreateView(CreateView, NameContextMixin):
+    # form_class =
+    fields = '__all__'
+    model = Tags
+    success_url = reverse_lazy('blog:tag_list')
+    template_name = 'notes/tag_create.html'
+
+    def post(self, request, *args, **kwargs):
+        """
+        Пришел пост запрос
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        """
+        Метод срабатывает после того как форма валидна
+        :param form:
+        :return:
+        """
+        return super().form_valid(form)
+
+
+class TagUpdataView(UpdateView):
+    fields = '__all__'
+    model = Tags
+    success_url = reverse_lazy('blog:tag_list')
+    template_name = 'notes/tag_create.html'
+
+
+class TagDeleteView(DeleteView):
+    template_name = 'notes/tag_delete_confirm.html'
+    model = Tags
+    success_url = reverse_lazy('blog:tag_list')
 
 
 

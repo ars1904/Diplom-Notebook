@@ -1,0 +1,43 @@
+{% extends 'dashboard.html' %}  {% load render_table from django_tables2 %}
+
+{% block extra_css %}
+    {{ create_form.media }}
+    <style>
+        textarea.form-control {
+            max-height: 600px;
+            width:1800px;
+        }
+        #id_description {
+            max-height: 500px;
+            height:500px;
+        }
+        #id_description_ifr {
+            max-height: 500px;
+            height:500px;
+        }
+        #id_tag {
+            max-height: 150px;
+            height:150px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class='card'>
+        <h1>{{name}}</h1>
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+            </div>
+</div>
+{% endblock %}
